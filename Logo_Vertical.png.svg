@@ -1,0 +1,33 @@
+<svg width="200" height="220" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="vertGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#25D366"/>
+      <stop offset="100%" style="stop-color:#128C7E"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Chat bubble icon centered -->
+  <rect x="60" y="10" width="80" height="80" rx="20" fill="url(#vertGrad)"/>
+  
+  <!-- Face background -->
+  <ellipse cx="100" cy="48" rx="28" ry="24" fill="white"/>
+  
+  <!-- Eyes -->
+  <circle cx="88" cy="44" r="6" fill="#25D366"/>
+  <circle cx="112" cy="44" r="6" fill="#25D366"/>
+  
+  <!-- Eye highlights -->
+  <circle cx="90" cy="42" r="2" fill="white"/>
+  <circle cx="114" cy="42" r="2" fill="white"/>
+  
+  <!-- Smile - fixed arc -->
+  <path d="M82 56 Q100 72 118 56" stroke="#25D366" stroke-width="5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Text -->
+  <text x="100" y="125" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700" fill="#1e293b" text-anchor="middle">Ajuda</text>
+  <text x="100" y="160" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="700" fill="#25D366" text-anchor="middle">Fácil</text>
+  
+  <!-- .ia.br badge -->
+  <rect x="60" y="175" width="80" height="30" rx="8" fill="#25D366"/>
+  <text x="100" y="197" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" fill="white" text-anchor="middle">.ia.br</text>
+</svg>

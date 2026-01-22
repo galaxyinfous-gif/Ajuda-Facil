@@ -1,0 +1,147 @@
+// This is your Prisma schema file
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// USUÁRIOS
+// ============================================
+model User {
+  id           String   @id @default(uuid())
+  phoneNumber  String   @unique @map("phone_number")
+  name         String?
+  preferences  Json     @default("{}")
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  conversations Conversation[]
+  orders        Order[]
+  reminders     Reminder[]
+
+  @@map("users")
+}
+
+// ============================================
+// CONVERSAS
+// ============================================
+model Conversation {
+  id        String             @id @default(uuid())
+  userId    String             @map("user_id")
+  status    ConversationStatus @default(ACTIVE)
+  context   Json               @default("{}")
+  intent    String?
+  createdAt DateTime           @default(now()) @map("created_at")
+  updatedAt DateTime           @updatedAt @map("updated_at")
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages Message[]
+
+  @@map("conversations")
+}
+
+enum ConversationStatus {
+  ACTIVE
+  IDLE
+  UNDERSTANDING
+  COLLECTING
+  SEARCHING
+  CONFIRMING
+  EXECUTING
+  COMPLETED
+}
+
+// ============================================
+// MENSAGENS
+// ============================================
+model Message {
+  id             String      @id @default(uuid())
+  conversationId String      @map("conversation_id")
+  role           MessageRole
+  content        String
+  mediaUrl       String?     @map("media_url")
+  mediaType      String?     @map("media_type")
+  transcription  String?
+  metadata       Json        @default("{}")
+  createdAt      DateTime    @default(now()) @map("created_at")
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+  SYSTEM
+}
+
+// ============================================
+// PEDIDOS
+// ============================================
+model Order {
+  id          String      @id @default(uuid())
+  userId      String      @map("user_id")
+  type        OrderType
+  provider    String
+  status      OrderStatus @default(PENDING)
+  externalId  String?     @map("external_id")
+  details     Json
+  totalAmount Decimal?    @map("total_amount") @db.Decimal(10, 2)
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("orders")
+}
+
+enum OrderType {
+  RIDE
+  FOOD
+  PHARMACY
+  OTHER
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  FAILED
+}
+
+// ============================================
+// LEMBRETES
+// ============================================
+model Reminder {
+  id          String       @id @default(uuid())
+  userId      String       @map("user_id")
+  title       String
+  description String?
+  scheduledAt DateTime     @map("scheduled_at")
+  repeatType  RepeatType   @default(NONE) @map("repeat_type")
+  isActive    Boolean      @default(true) @map("is_active")
+  lastSentAt  DateTime?    @map("last_sent_at")
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("reminders")
+}
+
+enum RepeatType {
+  NONE
+  DAILY
+  WEEKLY
+  MONTHLY
+}

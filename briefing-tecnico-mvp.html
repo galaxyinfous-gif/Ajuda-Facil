@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Briefing Técnico MVP — Ajuda Fácil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #25D366;
+            --primary-dark: #128C7E;
+            --secondary: #075E54;
+            --accent: #34B7F1;
+            --text: #1a1a2e;
+            --text-light: #4a4a68;
+            --text-muted: #6b6b8a;
+            --bg: #ffffff;
+            --bg-alt: #f8faf9;
+            --bg-dark: #1a1a2e;
+            --border: #e5e7eb;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* Print Styles */
+        @media print {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .header {
+                position: relative;
+            }
+
+            section {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .header-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .header-meta {
+            display: flex;
+            gap: 30px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--bg-dark);
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .sidebar-logo {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+            padding: 10px 0 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-nav a {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .sidebar-nav a.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+        }
+
+        .content-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 60px;
+            scroll-margin-top: 20px;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--primary);
+            display: inline-block;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text);
+            margin: 30px 0 16px;
+        }
+
+        h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin: 20px 0 12px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--text-light);
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+
+        th,
+        td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-alt);
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        tr:hover td {
+            background: var(--bg-alt);
+        }
+
+        /* Code Blocks */
+        pre {
+            background: var(--bg-dark);
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+
+        code {
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+
+        .inline-code {
+            background: var(--bg-alt);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: var(--primary-dark);
+        }
+
+        /* Priority Badges */
+        .priority {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .priority-p0 {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+
+        .priority-p1 {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+
+        .priority-p2 {
+            background: #DBEAFE;
+            color: #2563EB;
+        }
+
+        /* Status Badges */
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: #FEF3C7;
+            color: #D97706;
+        }
+
+        .status-done {
+            background: #D1FAE5;
+            color: #059669;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 4px;
+            width: 14px;
+            height: 14px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+
+        .timeline-week {
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+
+        /* Architecture Diagram */
+        .diagram {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+
+        .diagram pre {
+            background: transparent;
+            color: var(--text);
+            padding: 0;
+            margin: 0;
+            font-size: 0.8rem;
+        }
+
+        /* Checklist */
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .checklist li::before {
+            content: '☐';
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        /* Alert Boxes */
+        .alert {
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .alert-warning {
+            background: #FEF3C7;
+            border-left: 4px solid #F59E0B;
+        }
+
+        .alert-info {
+            background: #DBEAFE;
+            border-left: 4px solid #3B82F6;
+        }
+
+        .alert-success {
+            background: #D1FAE5;
+            border-left: 4px solid #10B981;
+        }
+
+        .alert-icon {
+            font-size: 1.25rem;
+        }
+
+        /* Flow Example */
+        .flow-example {
+            background: linear-gradient(to bottom, #ECE5DD, #d9d2c5);
+            border-radius: 16px;
+            padding: 20px;
+            max-width: 400px;
+            margin: 20px 0;
+        }
+
+        .chat-msg {
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            max-width: 85%;
+            font-size: 0.9rem;
+        }
+
+        .chat-user {
+            background: #DCF8C6;
+            margin-left: auto;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-bot {
+            background: white;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-dark);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 40px;
+            text-align: center;
+            margin-left: 280px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content,
+            .footer {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.75rem;
+            }
+
+            .header-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .content-wrapper {
+                padding: 20px;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-logo">💚 Ajuda Fácil</div>
+        <div class="sidebar-nav">
+            <a href="#visao-geral">1. Visão Geral</a>
+            <a href="#arquitetura">2. Arquitetura</a>
+            <a href="#fluxo">3. Fluxo do Usuário</a>
+            <a href="#funcionalidades">4. Funcionalidades MVP</a>
+            <a href="#requisitos">5. Requisitos</a>
+            <a href="#stack">6. Stack Tecnológico</a>
+            <a href="#database">7. Banco de Dados</a>
+            <a href="#apis">8. APIs e Integrações</a>
+            <a href="#cronograma">9. Cronograma</a>
+            <a href="#custos">10. Custos</a>
+            <a href="#criterios">11. Critérios de Aceite</a>
+            <a href="#entregaveis">12. Entregáveis</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="header-badge">📋 Documento Técnico</div>
+                <h1>Briefing Técnico MVP</h1>
+                <p class="header-subtitle">Ajuda Fácil — Assistente WhatsApp para Adultos 40+</p>
+                <div class="header-meta">
+                    <span>📅 Janeiro 2026</span>
+                    <span>📄 Versão 1.0</span>
+                    <span>🔒 Confidencial</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            <!-- Section 1: Visão Geral -->
+            <section id="visao-geral">
+                <h2>1. Visão Geral do Produto</h2>
+
+                <h3>1.1 Descrição</h3>
+                <p>O <strong>Ajuda Fácil</strong> é um assistente de inteligência artificial via WhatsApp que permite
+                    que adultos 40+ utilizem serviços de transporte, delivery e farmácia por meio de mensagens de texto
+                    ou áudio, sem precisar navegar em aplicativos complexos.</p>
+
+                <h3>1.2 O Problema</h3>
+                <div class="card-grid">
+                    <div class="card stat-card">
+                        <div class="stat-number">54.6M</div>
+                        <div class="stat-label">Brasileiros 40+ online</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-number">93%</div>
+                        <div class="stat-label">Usam WhatsApp</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-number">67%</div>
+                        <div class="stat-label">Dificuldade com apps</div>
+                    </div>
+                </div>
+
+                <h3>1.3 Exemplo de Fluxo</h3>
+                <div class="flow-example">
+                    <div class="chat-msg chat-user">
+                        🎤 "Quero ir pro shopping Iguatemi"
+                    </div>
+                    <div class="chat-msg chat-bot">
+                        Encontrei essas opções pra você:<br><br>
+                        🚗 <strong>99Pop</strong> - R$ 18,90 (5 min)<br>
+                        🚙 <strong>99Comfort</strong> - R$ 24,50 (7 min)<br><br>
+                        Qual você prefere?
+                    </div>
+                    <div class="chat-msg chat-user">
+                        O primeiro
+                    </div>
+                    <div class="chat-msg chat-bot">
+                        Perfeito! ✅ Corrida confirmada!<br>
+                        Motorista João chegando em 5 min.<br>
+                        Carro: Onix Prata - ABC-1234
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Arquitetura -->
+            <section id="arquitetura">
+                <h2>2. Arquitetura do Sistema</h2>
+
+                <div class="diagram">
+                    <pre>
+┌─────────────────────────────────────────────────────────────────────┐
+│                           USUÁRIO                                    │
+│                      (WhatsApp Mobile)                               │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                       TWILIO WHATSAPP API                            │
+│                    (Mensagens + Webhooks)                            │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                        BACKEND NODE.JS                               │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐               │
+│  │   Webhook    │  │   Message    │  │  Integration │               │
+│  │   Handler    │──│   Processor  │──│   Manager    │               │
+│  └──────────────┘  └──────────────┘  └──────────────┘               │
+└─────────────────────────────────────────────────────────────────────┘
+                                │
+                                ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│                         POSTGRESQL                                   │
+│        (Usuários, Conversas, Pedidos, Lembretes)                    │
+└─────────────────────────────────────────────────────────────────────┘
+</pre>
+                </div>
+
+                <h3>2.1 Componentes Principais</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Componente</th>
+                            <th>Tecnologia</th>
+                            <th>Responsabilidade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>API Gateway</td>
+                            <td>Express.js</td>
+                            <td>Recebe webhooks Twilio</td>
+                        </tr>
+                        <tr>
+                            <td>Message Processor</td>
+                            <td>Node.js</td>
+                            <td>Orquestra fluxo de mensagens</td>
+                        </tr>
+                        <tr>
+                            <td>AI Engine</td>
+                            <td>OpenAI GPT-4</td>
+                            <td>Entende intenção, gera respostas</td>
+                        </tr>
+                        <tr>
+                            <td>Audio Transcriber</td>
+                            <td>OpenAI Whisper</td>
+                            <td>Converte áudio em texto</td>
+                        </tr>
+                        <tr>
+                            <td>Integration Manager</td>
+                            <td>Node.js</td>
+                            <td>Conecta com 99, iFood, farmácias</td>
+                        </tr>
+                        <tr>
+                            <td>Database</td>
+                            <td>PostgreSQL</td>
+                            <td>Persiste dados</td>
+                        </tr>
+                        <tr>
+                            <td>Cache</td>
+                            <td>Redis</td>
+                            <td>Session state, rate limiting</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 3: Fluxo -->
+            <section id="fluxo">
+                <h2>3. Fluxo Principal do Usuário</h2>
+
+                <h3>3.1 Estados da Conversa</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Estado</th>
+                            <th>Descrição</th>
+                            <th>Próximos Estados</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="inline-code">IDLE</span></td>
+                            <td>Aguardando mensagem</td>
+                            <td>UNDERSTANDING</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">UNDERSTANDING</span></td>
+                            <td>Processando intenção</td>
+                            <td>COLLECTING, SEARCHING</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">COLLECTING</span></td>
+                            <td>Coletando informações</td>
+                            <td>SEARCHING</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">SEARCHING</span></td>
+                            <td>Buscando opções</td>
+                            <td>CONFIRMING</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">CONFIRMING</span></td>
+                            <td>Aguardando confirmação</td>
+                            <td>EXECUTING, IDLE</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">EXECUTING</span></td>
+                            <td>Executando pedido</td>
+                            <td>TRACKING</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">TRACKING</span></td>
+                            <td>Acompanhando pedido</td>
+                            <td>IDLE</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 4: Funcionalidades -->
+            <section id="funcionalidades">
+                <h2>4. Funcionalidades do MVP</h2>
+
+                <h3>4.1 Prioridade P0 — Essencial (Lançamento)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Funcionalidade</th>
+                            <th>Descrição</th>
+                            <th>Horas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="priority priority-p0">P0-1</span></td>
+                            <td>Receber mensagens</td>
+                            <td>Webhook Twilio, parsing</td>
+                            <td>8h</td>
+                        </tr>
+                        <tr>
+                            <td><span class="priority priority-p0">P0-2</span></td>
+                            <td>Transcrição de áudio</td>
+                            <td>Integração Whisper</td>
+                            <td>8h</td>
+                        </tr>
+                        <tr>
+                            <td><span class="priority priority-p0">P0-3</span></td>
+                            <td>Entendimento de intenção</td>
+                            <td>GPT-4 para classificar</td>
+                            <td>16h</td>
+                        </tr>
+                        <tr>
+                            <td><span class="priority priority-p0">P0-4</span></td>
+                            <td>Gerenciamento de conversa</td>
+                            <td>Estado, contexto, histórico</td>
+                            <td>24h</td>
+                        </tr>
+                        <tr>
+                            <td><span class="priority priority-p0">P0-5</span></td>
+                            <td>Respostas naturais</td>
+                            <td>Geração de texto humanizado</td>
+                            <td>8h</td>
+                        </tr>
+                        <tr>
+                            <td><span class="priority priority-p0">P0-6</span></td>
+                            <td>Banco de dados</td>
+                            <td>Schema, queries, migrations</td>
+                            <td>16h</td>
+                        </tr>
+                        <tr>
+                            <td><span class="priority priority-p0">P0-7</span></td>
+                            <td>Autenticação WhatsApp</td>
+                            <td>Identificar usuário por número</td>
+                            <td>8h</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><strong>Subtotal P0</strong></td>
+                            <td><strong>88h</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>4.2 Prioridade P1 — Core Features</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Funcionalidade</th>
+                            <th>Descrição</th>
+                            <th>Horas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="priority priority-p1">P1-1</span></td>
+                            <td>Integração 99</td>
+                            <td>API 99 para corridas</td>
+                            <td>40h</td>
+                        </tr>
+                        <tr>
+                            <td><span class="priority priority-p1">P1-2</span></td>
+                            <td>Integração iFood</td>
+                            <td>API iFood para delivery</td>
+                            <td>40h</td>
+                        </tr>
+                        <tr>
+                            <td><span class="priority priority-p1">P1-3</span></td>
+                            <td>Confirmação de pedido</td>
+                            <td>Fluxo de confirmação</td>
+                            <td>16h</td>
+                        </tr>
+                        <tr>
+                            <td><span class="priority priority-p1">P1-4</span></td>
+                            <td>Notificações</td>
+                            <td>Status da corrida/entrega</td>
+                            <td>16h</td>
+                        </tr>
+                        <tr>
+                            <td><span class="priority priority-p1">P1-5</span></td>
+                            <td>Histórico de pedidos</td>
+                            <td>Consultar pedidos anteriores</td>
+                            <td>8h</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><strong>Subtotal P1</strong></td>
+                            <td><strong>120h</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>4.3 Prioridade P2 — Nice to Have</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Funcionalidade</th>
+                            <th>Descrição</th>
+                            <th>Horas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="priority priority-p2">P2-1</span></td>
+                            <td>Sistema de lembretes</td>
+                            <td>Agendar lembretes de remédio</td>
+                            <td>24h</td>
+                        </tr>
+                        <tr>
+                            <td><span class="priority priority-p2">P2-2</span></td>
+                            <td>Dashboard admin</td>
+                            <td>Painel básico de gestão</td>
+                            <td>32h</td>
+                        </tr>
+                        <tr>
+                            <td><span class="priority priority-p2">P2-3</span></td>
+                            <td>Integração farmácias</td>
+                            <td>API Drogasil/Pacheco</td>
+                            <td>40h</td>
+                        </tr>
+                        <tr>
+                            <td><span class="priority priority-p2">P2-4</span></td>
+                            <td>Pagamento in-app</td>
+                            <td>Processar pagamentos</td>
+                            <td>40h</td>
+                        </tr>
+                        <tr>
+                            <td><span class="priority priority-p2">P2-5</span></td>
+                            <td>Analytics</td>
+                            <td>Métricas de uso</td>
+                            <td>16h</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><strong>Subtotal P2</strong></td>
+                            <td><strong>152h</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>4.4 Resumo de Horas</h3>
+                <div class="card-grid">
+                    <div class="card stat-card">
+                        <div class="stat-number">88h</div>
+                        <div class="stat-label">P0 — Essencial (24%)</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-number">120h</div>
+                        <div class="stat-label">P1 — Core (33%)</div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="stat-number">152h</div>
+                        <div class="stat-label">P2 — Extras (42%)</div>
+                    </div>
+                    <div class="card stat-card" style="background: var(--primary); color: white;">
+                        <div class="stat-number" style="color: white;">360h</div>
+                        <div class="stat-label" style="color: rgba(255,255,255,0.9);">Total Estimado</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: Requisitos -->
+            <section id="requisitos">
+                <h2>5. Requisitos Não-Funcionais</h2>
+
+                <h3>5.1 Performance</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Métrica</th>
+                            <th>Requisito</th>
+                            <th>Justificativa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Latência de resposta</td>
+                            <td><strong>&lt; 5 segundos</strong></td>
+                            <td>Experiência de chat natural</td>
+                        </tr>
+                        <tr>
+                            <td>Transcrição de áudio</td>
+                            <td><strong>&lt; 3 segundos</strong></td>
+                            <td>Áudios curtos (&lt; 30s)</td>
+                        </tr>
+                        <tr>
+                            <td>Tempo de busca API</td>
+                            <td><strong>&lt; 10 segundos</strong></td>
+                            <td>Aguardar opções</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>5.2 Disponibilidade</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Métrica</th>
+                            <th>Requisito</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Uptime</td>
+                            <td>99.5% (43h downtime/mês máx)</td>
+                        </tr>
+                        <tr>
+                            <td>Recovery Time</td>
+                            <td>&lt; 30 minutos</td>
+                        </tr>
+                        <tr>
+                            <td>Backup</td>
+                            <td>Diário, retenção 30 dias</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>5.3 Segurança</h3>
+                <ul class="checklist">
+                    <li>HTTPS obrigatório</li>
+                    <li>Validação de webhook Twilio</li>
+                    <li>Dados sensíveis encriptados (AES-256)</li>
+                    <li>LGPD compliance (consentimento, exclusão de dados)</li>
+                    <li>Rate limiting (100 msgs/min/usuário)</li>
+                    <li>Logs auditáveis</li>
+                </ul>
+            </section>
+
+            <!-- Section 6: Stack -->
+            <section id="stack">
+                <h2>6. Stack Tecnológico</h2>
+
+                <h3>6.1 Backend</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Camada</th>
+                            <th>Tecnologia</th>
+                            <th>Versão</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Runtime</td>
+                            <td>Node.js</td>
+                            <td>20 LTS</td>
+                        </tr>
+                        <tr>
+                            <td>Framework</td>
+                            <td>Express.js</td>
+                            <td>4.x</td>
+                        </tr>
+                        <tr>
+                            <td>Linguagem</td>
+                            <td>TypeScript</td>
+                            <td>5.x</td>
+                        </tr>
+                        <tr>
+                            <td>ORM</td>
+                            <td>Prisma</td>
+                            <td>5.x</td>
+                        </tr>
+                        <tr>
+                            <td>Validação</td>
+                            <td>Zod</td>
+                            <td>3.x</td>
+                        </tr>
+                        <tr>
+                            <td>Testes</td>
+                            <td>Jest + Supertest</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>6.2 Infraestrutura (AWS)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Serviço</th>
+                            <th>Uso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ECS Fargate</td>
+                            <td>Containers do backend</td>
+                        </tr>
+                        <tr>
+                            <td>RDS PostgreSQL</td>
+                            <td>Banco de dados</td>
+                        </tr>
+                        <tr>
+                            <td>ElastiCache Redis</td>
+                            <td>Cache e sessões</td>
+                        </tr>
+                        <tr>
+                            <td>S3</td>
+                            <td>Armazenamento de mídia</td>
+                        </tr>
+                        <tr>
+                            <td>CloudWatch</td>
+                            <td>Logs e monitoramento</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>6.3 Serviços Externos</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Serviço</th>
+                            <th>Função</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Twilio</td>
+                            <td>WhatsApp API</td>
+                            <td><span class="status status-done">Disponível</span></td>
+                        </tr>
+                        <tr>
+                            <td>OpenAI GPT-4</td>
+                            <td>Processamento de linguagem</td>
+                            <td><span class="status status-done">Disponível</span></td>
+                        </tr>
+                        <tr>
+                            <td>OpenAI Whisper</td>
+                            <td>Transcrição de áudio</td>
+                            <td><span class="status status-done">Disponível</span></td>
+                        </tr>
+                        <tr>
+                            <td>99</td>
+                            <td>API de transporte</td>
+                            <td><span class="status status-pending">Parceria necessária</span></td>
+                        </tr>
+                        <tr>
+                            <td>iFood</td>
+                            <td>API de delivery</td>
+                            <td><span class="status status-pending">Parceria necessária</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="alert alert-warning">
+                    <span class="alert-icon">⚠️</span>
+                    <div>
+                        <strong>Nota:</strong> As APIs de 99 e iFood requerem parceria comercial. Durante o MVP, pode-se
+                        usar simulação ou mock.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 7: Database -->
+            <section id="database">
+                <h2>7. Schema do Banco de Dados</h2>
+
+                <h3>7.1 Tabelas Principais</h3>
+
+                <pre>
+<code>-- Usuários
+CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    phone_number VARCHAR(20) UNIQUE NOT NULL,
+    name VARCHAR(100),
+    preferences JSONB DEFAULT '{}',
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Conversas
+CREATE TABLE conversations (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(id),
+    status VARCHAR(20) DEFAULT 'active',
+    context JSONB DEFAULT '{}',
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Mensagens
+CREATE TABLE messages (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    conversation_id UUID REFERENCES conversations(id),
+    role VARCHAR(10) NOT NULL, -- 'user' ou 'assistant'
+    content TEXT NOT NULL,
+    media_url TEXT,
+    metadata JSONB DEFAULT '{}',
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Pedidos
+CREATE TABLE orders (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID REFERENCES users(id),
+    type VARCHAR(20) NOT NULL, -- 'ride', 'food', 'pharmacy'
+    provider VARCHAR(50) NOT NULL, -- '99', 'ifood', etc
+    status VARCHAR(20) DEFAULT 'pending',
+    external_id VARCHAR(100),
+    details JSONB NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW()
+);</code>
+</pre>
+            </section>
+
+            <!-- Section 8: APIs -->
+            <section id="apis">
+                <h2>8. APIs e Integrações</h2>
+
+                <h3>8.1 API Interna (REST)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Endpoint</th>
+                            <th>Método</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="inline-code">/webhook/whatsapp</span></td>
+                            <td>POST</td>
+                            <td>Recebe mensagens Twilio</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">/webhook/twilio/status</span></td>
+                            <td>POST</td>
+                            <td>Status de entrega</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">/api/users</span></td>
+                            <td>GET</td>
+                            <td>Lista usuários (admin)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">/api/orders</span></td>
+                            <td>GET</td>
+                            <td>Lista pedidos (admin)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="inline-code">/health</span></td>
+                            <td>GET</td>
+                            <td>Health check</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 9: Cronograma -->
+            <section id="cronograma">
+                <h2>9. Cronograma (12 Semanas)</h2>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-week">Semanas 1-2 — Setup</div>
+                        <p>Ambiente, CI/CD, estrutura do projeto</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-week">Semanas 3-4 — Core</div>
+                        <p>Webhook Twilio, integração OpenAI</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-week">Semanas 5-6 — P0</div>
+                        <p>Fluxo de conversa, transcrição, banco de dados</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-week">Semanas 7-8 — P1</div>
+                        <p>Integração 99 (ou mock)</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-week">Semanas 9-10 — P1</div>
+                        <p>Integração iFood (ou mock)</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-week">Semana 11 — Testes</div>
+                        <p>QA, correções, otimizações</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-week">Semana 12 — Deploy</div>
+                        <p>Produção, documentação, handoff</p>
+                    </div>
+                </div>
+
+                <h3>9.1 Marcos (Milestones)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Semana</th>
+                            <th>Marco</th>
+                            <th>Critério de Aceite</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2</td>
+                            <td>M1: Ambiente pronto</td>
+                            <td>CI/CD funcionando, deploy staging</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>M2: Bot conversando</td>
+                            <td>Responde via WhatsApp com GPT</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>M3: Core completo</td>
+                            <td>Transcrição + contexto + DB</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>M4: 99 integrado</td>
+                            <td>Pedir corrida end-to-end</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>M5: iFood integrado</td>
+                            <td>Pedir comida end-to-end</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>M6: MVP lançado</td>
+                            <td>Em produção com 10 usuários beta</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 10: Custos -->
+            <section id="custos">
+                <h2>10. Estimativa de Custos</h2>
+
+                <h3>10.1 Custos de Desenvolvimento</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Horas</th>
+                            <th>Valor/Hora</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>P0 (Essencial)</td>
+                            <td>88h</td>
+                            <td>R$ 150</td>
+                            <td>R$ 13.200</td>
+                        </tr>
+                        <tr>
+                            <td>P1 (Core)</td>
+                            <td>120h</td>
+                            <td>R$ 150</td>
+                            <td>R$ 18.000</td>
+                        </tr>
+                        <tr>
+                            <td>P2 (Extras)</td>
+                            <td>152h</td>
+                            <td>R$ 150</td>
+                            <td>R$ 22.800</td>
+                        </tr>
+                        <tr style="background: var(--bg-alt); font-weight: 600;">
+                            <td>Total</td>
+                            <td>360h</td>
+                            <td>—</td>
+                            <td>R$ 54.000</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="alert alert-info">
+                    <span class="alert-icon">💡</span>
+                    <div>
+                        Valores de referência para desenvolvedor sênior freelancer. Agências podem custar 50-100% a
+                        mais.
+                    </div>
+                </div>
+
+                <h3>10.2 Custos de Infraestrutura (Mensal)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Serviço</th>
+                            <th>Custo/Mês</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>AWS ECS + RDS + Redis</td>
+                            <td>R$ 400-800</td>
+                        </tr>
+                        <tr>
+                            <td>Twilio (10k msgs)</td>
+                            <td>R$ 250-500</td>
+                        </tr>
+                        <tr>
+                            <td>OpenAI (10k msgs)</td>
+                            <td>R$ 50-100</td>
+                        </tr>
+                        <tr>
+                            <td>Domínio + SSL</td>
+                            <td>R$ 50</td>
+                        </tr>
+                        <tr style="background: var(--primary); color: white; font-weight: 600;">
+                            <td>Total</td>
+                            <td>R$ 750-1.450/mês</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 11: Critérios -->
+            <section id="criterios">
+                <h2>11. Critérios de Aceite do MVP</h2>
+
+                <h3>11.1 Funcionalidades</h3>
+                <ul class="checklist">
+                    <li>Usuário envia texto → recebe resposta em &lt; 5s</li>
+                    <li>Usuário envia áudio → transcrito e processado</li>
+                    <li>Bot entende "quero ir pro shopping" como pedido de corrida</li>
+                    <li>Bot apresenta opções de corrida com preço</li>
+                    <li>Usuário confirma → pedido é registrado</li>
+                    <li>Histórico de conversa mantido por 24h</li>
+                </ul>
+
+                <h3>11.2 Qualidade</h3>
+                <ul class="checklist">
+                    <li>Cobertura de testes &gt; 70%</li>
+                    <li>Zero vulnerabilidades críticas</li>
+                    <li>Documentação de API completa</li>
+                    <li>Logs estruturados funcionando</li>
+                </ul>
+
+                <h3>11.3 Deploy</h3>
+                <ul class="checklist">
+                    <li>Ambiente de staging funcionando</li>
+                    <li>Ambiente de produção configurado</li>
+                    <li>Monitoramento ativo</li>
+                    <li>Playbook de incidentes documentado</li>
+                </ul>
+            </section>
+
+            <!-- Section 12: Entregáveis -->
+            <section id="entregaveis">
+                <h2>12. Entregáveis Esperados</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Entregável</th>
+                            <th>Formato</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Código-fonte</td>
+                            <td>Repositório GitHub privado</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Documentação técnica</td>
+                            <td>Markdown no repositório</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Documentação de API</td>
+                            <td>OpenAPI/Swagger</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Testes automatizados</td>
+                            <td>Jest</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Scripts de deploy</td>
+                            <td>Dockerfile + terraform</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Ambiente staging</td>
+                            <td>URL funcional</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Ambiente produção</td>
+                            <td>URL funcional</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>Runbook operacional</td>
+                            <td>PDF/Notion</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="card" style="margin-top: 40px; background: var(--bg-alt);">
+                    <h3 style="margin-top: 0;">📧 Para Candidatar-se</h3>
+                    <p>Enviar proposta com:</p>
+                    <ol style="margin-left: 20px; color: var(--text-light);">
+                        <li>Portfolio com projetos similares (chatbots, integrações API)</li>
+                        <li>Estimativa de horas e cronograma</li>
+                        <li>Proposta comercial</li>
+                        <li>Disponibilidade de início</li>
+                    </ol>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p><strong>Documento Confidencial</strong></p>
+        <p>Ajuda Fácil © 2026 — Feito com 💚 no Brasil</p>
+    </footer>
+
+    <script>
+        // Highlight active section in sidebar
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Print button functionality
+        function printDocument() {
+            window.print();
+        }
+    </script>
+</body>
+
+</html>

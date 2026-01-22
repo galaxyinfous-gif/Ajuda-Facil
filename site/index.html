@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajuda Fácil - Peça Uber, Comida e Remédio pelo WhatsApp</title>
+    <meta name="description"
+        content="Peça transporte, comida e remédios pelo WhatsApp sem baixar apps complicados. Ideal para adultos 40+.">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        whatsapp: '#25D366',
+                        'whatsapp-dark': '#128C7E',
+                        navy: '#1A2744',
+                        'navy-light': '#2D3E5C',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .gradient-hero {
+            background: linear-gradient(135deg, #1A2744 0%, #2D3E5C 50%, #1A2744 100%);
+        }
+
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+    </style>
+</head>
+
+<body class="font-sans text-gray-800 bg-white" x-data="{ showModal: false, showMobileMenu: false }">
+
+    <!-- ========================================
+         FLOATING WHATSAPP BUTTON
+    ======================================== -->
+    <a href="https://wa.me/5511999999999?text=Oi!%20Quero%20conhecer%20o%20Ajuda%20Fácil" target="_blank"
+        class="fixed bottom-6 right-6 z-50 bg-whatsapp hover:bg-whatsapp-dark text-white p-4 rounded-full shadow-2xl pulse-animation transition-all hover:scale-110"
+        aria-label="Falar pelo WhatsApp">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+    </a>
+
+    <!-- ========================================
+         HEADER
+    ======================================== -->
+    <header class="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <a href="#" class="flex items-center">
+                    <svg width="160" height="40" viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg" class="h-10">
+                        <defs>
+                            <linearGradient id="grd1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#25D366" />
+                                <stop offset="100%" style="stop-color:#128C7E" />
+                            </linearGradient>
+                        </defs>
+                        <rect x="5" y="15" width="70" height="70" rx="18" fill="url(#grd1)" />
+                        <ellipse cx="40" cy="48" rx="24" ry="20" fill="white" />
+                        <circle cx="30" cy="44" r="5" fill="#25D366" />
+                        <circle cx="50" cy="44" r="5" fill="#25D366" />
+                        <circle cx="32" cy="42" r="2" fill="white" />
+                        <circle cx="52" cy="42" r="2" fill="white" />
+                        <path d="M26 54 Q40 66 54 54" stroke="#25D366" stroke-width="4" fill="none"
+                            stroke-linecap="round" />
+                        <text x="90" y="52" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="700"
+                            fill="#1A2744">Ajuda</text>
+                        <text x="210" y="52" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="700"
+                            fill="#25D366">Fácil</text>
+                        <rect x="90" y="62" width="60" height="26" rx="6" fill="#25D366" />
+                        <text x="120" y="81" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700"
+                            fill="white" text-anchor="middle">.ia.br</text>
+                    </svg>
+                </a>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="#como-funciona" class="text-gray-600 hover:text-navy font-medium">Como Funciona</a>
+                    <a href="#funcionalidades" class="text-gray-600 hover:text-navy font-medium">Funcionalidades</a>
+                    <a href="#precos" class="text-gray-600 hover:text-navy font-medium">Preços</a>
+                    <a href="#faq" class="text-gray-600 hover:text-navy font-medium">FAQ</a>
+                </nav>
+
+                <a href="#cadastro"
+                    class="hidden md:inline-flex bg-whatsapp hover:bg-whatsapp-dark text-white font-semibold px-6 py-3 rounded-full transition-all text-lg">
+                    Começar Agora
+                </a>
+
+                <!-- Mobile Menu Button -->
+                <button @click="showMobileMenu = !showMobileMenu" class="md:hidden p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div x-show="showMobileMenu" x-cloak class="md:hidden mt-4 pb-4 border-t pt-4">
+                <nav class="flex flex-col gap-4">
+                    <a href="#como-funciona" class="text-gray-600 hover:text-navy font-medium text-lg">Como Funciona</a>
+                    <a href="#funcionalidades"
+                        class="text-gray-600 hover:text-navy font-medium text-lg">Funcionalidades</a>
+                    <a href="#precos" class="text-gray-600 hover:text-navy font-medium text-lg">Preços</a>
+                    <a href="#faq" class="text-gray-600 hover:text-navy font-medium text-lg">FAQ</a>
+                    <a href="#cadastro"
+                        class="bg-whatsapp text-white font-semibold px-6 py-3 rounded-full text-center text-lg">Começar
+                        Agora</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========================================
+         HERO SECTION
+    ======================================== -->
+    <section class="gradient-hero pt-32 pb-20 md:pt-40 md:pb-32 text-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-block bg-white/10 px-4 py-2 rounded-full text-sm font-medium mb-6">
+                        ✨ Novo no Brasil
+                    </div>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
+                        Peça Uber, comida e remédio
+                        <span class="text-whatsapp">pelo WhatsApp.</span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
+                        Sem baixar app. Sem complicação.<br>
+                        Mande uma mensagem e a gente resolve.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#cadastro"
+                            class="bg-whatsapp hover:bg-whatsapp-dark text-white font-bold px-8 py-4 rounded-full text-xl transition-all hover:scale-105 text-center shadow-lg">
+                            Começar Grátis →
+                        </a>
+                        <a href="#como-funciona"
+                            class="border-2 border-white/30 hover:border-white text-white font-semibold px-8 py-4 rounded-full text-xl transition-all text-center">
+                            Ver Como Funciona
+                        </a>
+                    </div>
+                    <p class="mt-6 text-gray-400 text-lg">
+                        ✓ 7 dias grátis &nbsp; ✓ Sem cartão de crédito
+                    </p>
+                </div>
+
+                <!-- Phone Mockup -->
+                <div class="hidden md:block">
+                    <div class="floating-animation">
+                        <div class="bg-gray-800 rounded-[3rem] p-3 max-w-[320px] mx-auto shadow-2xl">
+                            <div
+                                class="bg-gradient-to-b from-[#ECE5DD] to-[#d9d2c5] rounded-[2.5rem] p-4 min-h-[500px]">
+                                <!-- Chat Header -->
+                                <div
+                                    class="bg-[#075E54] -mx-4 -mt-4 px-4 py-3 rounded-t-[2.5rem] flex items-center gap-3 mb-4">
+                                    <div
+                                        class="w-10 h-10 bg-whatsapp rounded-full flex items-center justify-center text-white text-xl">
+                                        💚</div>
+                                    <div>
+                                        <div class="text-white font-semibold">Ajuda Fácil</div>
+                                        <div class="text-green-200 text-sm">online</div>
+                                    </div>
+                                </div>
+
+                                <!-- Chat Messages -->
+                                <div class="space-y-3">
+                                    <div
+                                        class="bg-[#DCF8C6] p-3 rounded-lg rounded-br-sm max-w-[85%] ml-auto shadow-sm">
+                                        <p class="text-gray-800">🎤 Quero ir pro shopping Iguatemi</p>
+                                        <span class="text-xs text-gray-500 float-right mt-1">14:32 ✓✓</span>
+                                    </div>
+
+                                    <div class="bg-white p-3 rounded-lg rounded-bl-sm max-w-[85%] shadow-sm">
+                                        <p class="text-gray-800 mb-2">Encontrei essas opções pra você! 🚗</p>
+                                        <div class="bg-gray-100 p-2 rounded mb-2">
+                                            <div class="font-semibold">99Pop</div>
+                                            <div class="text-sm text-gray-600">R$ 18,90 • 5 min</div>
+                                        </div>
+                                        <p class="text-gray-800">Qual você prefere?</p>
+                                        <span class="text-xs text-gray-500 float-right mt-1">14:32</span>
+                                    </div>
+
+                                    <div
+                                        class="bg-[#DCF8C6] p-3 rounded-lg rounded-br-sm max-w-[85%] ml-auto shadow-sm">
+                                        <p class="text-gray-800">O primeiro!</p>
+                                        <span class="text-xs text-gray-500 float-right mt-1">14:33 ✓✓</span>
+                                    </div>
+
+                                    <div class="bg-white p-3 rounded-lg rounded-bl-sm max-w-[85%] shadow-sm">
+                                        <p class="text-gray-800">Perfeito! ✅ Corrida confirmada!</p>
+                                        <p class="text-gray-800 mt-1">Motorista João chega em 5 min 🚗</p>
+                                        <span class="text-xs text-gray-500 float-right mt-1">14:33</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         SOCIAL PROOF BAR
+    ======================================== -->
+    <section class="bg-gray-50 py-8 border-b">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16 text-center">
+                <div>
+                    <div class="text-3xl md:text-4xl font-bold text-navy">54.6M</div>
+                    <div class="text-gray-600">Brasileiros 40+ online</div>
+                </div>
+                <div>
+                    <div class="text-3xl md:text-4xl font-bold text-whatsapp">93%</div>
+                    <div class="text-gray-600">Usam WhatsApp</div>
+                </div>
+                <div>
+                    <div class="text-3xl md:text-4xl font-bold text-navy">67%</div>
+                    <div class="text-gray-600">Têm dificuldade com apps</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         COMO FUNCIONA
+    ======================================== -->
+    <section id="como-funciona" class="py-20 md:py-28">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold text-navy mb-4">Como Funciona?</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Tão simples quanto mandar mensagem pra um amigo</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 md:gap-12">
+                <!-- Step 1 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-whatsapp/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-4xl">💬</span>
+                    </div>
+                    <div
+                        class="bg-whatsapp text-white w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                        1</div>
+                    <h3 class="text-2xl font-bold text-navy mb-3">Mande uma mensagem</h3>
+                    <p class="text-lg text-gray-600">Escreva ou mande um áudio dizendo o que precisa. Simples assim!</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-whatsapp/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-4xl">🤖</span>
+                    </div>
+                    <div
+                        class="bg-whatsapp text-white w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                        2</div>
+                    <h3 class="text-2xl font-bold text-navy mb-3">A gente entende</h3>
+                    <p class="text-lg text-gray-600">Nossa IA entende seu pedido e busca as melhores opções pra você.
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-whatsapp/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-4xl">✅</span>
+                    </div>
+                    <div
+                        class="bg-whatsapp text-white w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                        3</div>
+                    <h3 class="text-2xl font-bold text-navy mb-3">Você confirma</h3>
+                    <p class="text-lg text-gray-600">Escolha a opção que mais gosta e pronto! Resolvido.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         FUNCIONALIDADES
+    ======================================== -->
+    <section id="funcionalidades" class="py-20 md:py-28 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold text-navy mb-4">O que você pode pedir?</h2>
+                <p class="text-xl text-gray-600">Tudo pelo WhatsApp, sem baixar nenhum app</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Transporte -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+                    <div class="text-5xl mb-4">🚗</div>
+                    <h3 class="text-2xl font-bold text-navy mb-2">Transporte</h3>
+                    <p class="text-gray-600 text-lg">Uber, 99, táxi. Vá para onde precisar sem complicação.</p>
+                </div>
+
+                <!-- Delivery -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+                    <div class="text-5xl mb-4">🍕</div>
+                    <h3 class="text-2xl font-bold text-navy mb-2">Delivery</h3>
+                    <p class="text-gray-600 text-lg">Pizza, hambúrguer, sushi... Peça comida do seu jeito.</p>
+                </div>
+
+                <!-- Farmácia -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+                    <div class="text-5xl mb-4">💊</div>
+                    <h3 class="text-2xl font-bold text-navy mb-2">Farmácia</h3>
+                    <p class="text-gray-600 text-lg">Remédios na sua porta. A gente compara preços pra você.</p>
+                </div>
+
+                <!-- Lembretes -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+                    <div class="text-5xl mb-4">⏰</div>
+                    <h3 class="text-2xl font-bold text-navy mb-2">Lembretes</h3>
+                    <p class="text-gray-600 text-lg">Hora do remédio? A gente te avisa. Nunca mais esqueça.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         DEPOIMENTOS
+    ======================================== -->
+    <section class="py-20 md:py-28">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold text-navy mb-4">O que dizem nossos clientes</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Depoimento 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                    <div class="flex gap-1 mb-4">
+                        <span class="text-yellow-400 text-2xl">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">"Minha mãe de 68 anos usa todo dia! Ela manda áudio pedindo o
+                        Uber e pronto. Não precisa mais me ligar pra pedir ajuda."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-whatsapp/20 rounded-full flex items-center justify-center text-2xl">👩
+                        </div>
+                        <div>
+                            <div class="font-semibold text-navy">Fernanda S.</div>
+                            <div class="text-gray-500">São Paulo, SP</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Depoimento 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                    <div class="flex gap-1 mb-4">
+                        <span class="text-yellow-400 text-2xl">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">"Finalmente consigo pedir comida sozinho! Os apps são muito
+                        complicados pra mim. Aqui é só mandar mensagem."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-whatsapp/20 rounded-full flex items-center justify-center text-2xl">👨
+                        </div>
+                        <div>
+                            <div class="font-semibold text-navy">José Carlos M.</div>
+                            <div class="text-gray-500">Rio de Janeiro, RJ</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Depoimento 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+                    <div class="flex gap-1 mb-4">
+                        <span class="text-yellow-400 text-2xl">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">"O lembrete de remédio salvou minha vida! Agora não esqueço
+                        mais de tomar meus medicamentos de pressão."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-whatsapp/20 rounded-full flex items-center justify-center text-2xl">👵
+                        </div>
+                        <div>
+                            <div class="font-semibold text-navy">Maria Helena P.</div>
+                            <div class="text-gray-500">Belo Horizonte, MG</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         PREÇOS
+    ======================================== -->
+    <section id="precos" class="py-20 md:py-28 bg-navy text-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Planos que cabem no seu bolso</h2>
+                <p class="text-xl text-gray-300">Escolha o melhor pra você. Cancele quando quiser.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Plano Básico -->
+                <div class="bg-white/5 backdrop-blur p-8 rounded-3xl border border-white/10">
+                    <div class="text-lg font-medium text-whatsapp mb-2">Básico</div>
+                    <div class="flex items-baseline gap-2 mb-6">
+                        <span class="text-5xl font-bold">R$29</span>
+                        <span class="text-gray-400">/mês</span>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3 text-lg">
+                            <span class="text-whatsapp">✓</span> Transporte (Uber, 99)
+                        </li>
+                        <li class="flex items-center gap-3 text-lg">
+                            <span class="text-whatsapp">✓</span> Delivery de comida
+                        </li>
+                        <li class="flex items-center gap-3 text-lg">
+                            <span class="text-whatsapp">✓</span> Até 50 pedidos/mês
+                        </li>
+                        <li class="flex items-center gap-3 text-lg">
+                            <span class="text-whatsapp">✓</span> Suporte por WhatsApp
+                        </li>
+                        <li class="flex items-center gap-3 text-lg text-gray-500">
+                            <span>✗</span> Farmácia
+                        </li>
+                        <li class="flex items-center gap-3 text-lg text-gray-500">
+                            <span>✗</span> Lembretes de remédio
+                        </li>
+                    </ul>
+                    <a href="#cadastro"
+                        class="block w-full bg-white/10 hover:bg-white/20 text-white font-semibold py-4 rounded-full text-center text-xl transition-all">
+                        Começar Grátis
+                    </a>
+                </div>
+
+                <!-- Plano Completo -->
+                <div class="bg-whatsapp p-8 rounded-3xl relative">
+                    <div
+                        class="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-navy font-bold px-4 py-1 rounded-full text-sm">
+                        ⭐ MAIS POPULAR
+                    </div>
+                    <div class="text-lg font-medium text-white/80 mb-2">Completo</div>
+                    <div class="flex items-baseline gap-2 mb-6">
+                        <span class="text-5xl font-bold">R$49</span>
+                        <span class="text-white/70">/mês</span>
+                    </div>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3 text-lg">
+                            <span>✓</span> Transporte (Uber, 99)
+                        </li>
+                        <li class="flex items-center gap-3 text-lg">
+                            <span>✓</span> Delivery de comida
+                        </li>
+                        <li class="flex items-center gap-3 text-lg">
+                            <span>✓</span> Farmácia com melhores preços
+                        </li>
+                        <li class="flex items-center gap-3 text-lg">
+                            <span>✓</span> Lembretes de remédio
+                        </li>
+                        <li class="flex items-center gap-3 text-lg">
+                            <span>✓</span> Pedidos ilimitados
+                        </li>
+                        <li class="flex items-center gap-3 text-lg">
+                            <span>✓</span> Suporte prioritário
+                        </li>
+                    </ul>
+                    <a href="#cadastro"
+                        class="block w-full bg-white text-whatsapp-dark font-bold py-4 rounded-full text-center text-xl transition-all hover:bg-gray-100">
+                        Começar Grátis →
+                    </a>
+                </div>
+            </div>
+
+            <p class="text-center text-gray-400 mt-8 text-lg">
+                💳 Pague com PIX, boleto ou cartão. Cancele quando quiser.
+            </p>
+        </div>
+    </section>
+
+    <!-- ========================================
+         FAQ
+    ======================================== -->
+    <section id="faq" class="py-20 md:py-28">
+        <div class="max-w-3xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold text-navy mb-4">Perguntas Frequentes</h2>
+            </div>
+
+            <div class="space-y-4" x-data="{ open: 1 }">
+                <!-- FAQ 1 -->
+                <div class="border border-gray-200 rounded-2xl overflow-hidden">
+                    <button @click="open = open === 1 ? null : 1"
+                        class="w-full flex justify-between items-center p-6 text-left">
+                        <span class="text-xl font-semibold text-navy">Preciso baixar algum app?</span>
+                        <span class="text-2xl text-whatsapp" x-text="open === 1 ? '−' : '+'"></span>
+                    </button>
+                    <div x-show="open === 1" x-collapse class="px-6 pb-6">
+                        <p class="text-lg text-gray-600">Não! Tudo funciona pelo WhatsApp que você já usa. Só precisa
+                            adicionar nosso número e começar a conversar.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="border border-gray-200 rounded-2xl overflow-hidden">
+                    <button @click="open = open === 2 ? null : 2"
+                        class="w-full flex justify-between items-center p-6 text-left">
+                        <span class="text-xl font-semibold text-navy">É seguro?</span>
+                        <span class="text-2xl text-whatsapp" x-text="open === 2 ? '−' : '+'"></span>
+                    </button>
+                    <div x-show="open === 2" x-collapse class="px-6 pb-6">
+                        <p class="text-lg text-gray-600">Sim! Usamos os mesmos apps que você usaria (Uber, iFood), só
+                            facilitamos o processo. Seus dados são protegidos e seguimos a LGPD.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="border border-gray-200 rounded-2xl overflow-hidden">
+                    <button @click="open = open === 3 ? null : 3"
+                        class="w-full flex justify-between items-center p-6 text-left">
+                        <span class="text-xl font-semibold text-navy">Posso mandar áudio?</span>
+                        <span class="text-2xl text-whatsapp" x-text="open === 3 ? '−' : '+'"></span>
+                    </button>
+                    <div x-show="open === 3" x-collapse class="px-6 pb-6">
+                        <p class="text-lg text-gray-600">Sim! Pode mandar áudio ou escrever, como preferir. Nossa
+                            inteligência artificial entende as duas formas perfeitamente.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="border border-gray-200 rounded-2xl overflow-hidden">
+                    <button @click="open = open === 4 ? null : 4"
+                        class="w-full flex justify-between items-center p-6 text-left">
+                        <span class="text-xl font-semibold text-navy">E se eu quiser cancelar?</span>
+                        <span class="text-2xl text-whatsapp" x-text="open === 4 ? '−' : '+'"></span>
+                    </button>
+                    <div x-show="open === 4" x-collapse class="px-6 pb-6">
+                        <p class="text-lg text-gray-600">Cancele quando quiser, sem multa. É só mandar uma mensagem
+                            dizendo "quero cancelar" e a gente resolve. Simples assim.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="border border-gray-200 rounded-2xl overflow-hidden">
+                    <button @click="open = open === 5 ? null : 5"
+                        class="w-full flex justify-between items-center p-6 text-left">
+                        <span class="text-xl font-semibold text-navy">Como funciona o pagamento?</span>
+                        <span class="text-2xl text-whatsapp" x-text="open === 5 ? '−' : '+'"></span>
+                    </button>
+                    <div x-show="open === 5" x-collapse class="px-6 pb-6">
+                        <p class="text-lg text-gray-600">Aceitamos PIX, boleto e cartão de crédito. Você paga a
+                            assinatura mensal e os pedidos (Uber, comida, etc) são pagos diretamente aos serviços.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         CADASTRO / CTA FINAL
+    ======================================== -->
+    <section id="cadastro" class="py-20 md:py-28 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-white p-8 md:p-12 rounded-3xl shadow-2xl">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl md:text-4xl font-bold text-navy mb-4">Comece a usar agora!</h2>
+                    <p class="text-xl text-gray-600">Preencha seus dados e receba acesso ao Ajuda Fácil em minutos.</p>
+                </div>
+
+                <form action="#" method="POST" class="space-y-6" x-data="{ step: 1 }">
+                    <!-- Nome -->
+                    <div>
+                        <label for="nome" class="block text-lg font-medium text-gray-700 mb-2">Seu nome</label>
+                        <input type="text" id="nome" name="nome" required
+                            class="w-full px-5 py-4 text-xl border-2 border-gray-200 rounded-xl focus:border-whatsapp focus:ring-whatsapp focus:outline-none"
+                            placeholder="Como podemos te chamar?">
+                    </div>
+
+                    <!-- WhatsApp -->
+                    <div>
+                        <label for="whatsapp" class="block text-lg font-medium text-gray-700 mb-2">Seu WhatsApp</label>
+                        <input type="tel" id="whatsapp" name="whatsapp" required
+                            class="w-full px-5 py-4 text-xl border-2 border-gray-200 rounded-xl focus:border-whatsapp focus:ring-whatsapp focus:outline-none"
+                            placeholder="(11) 99999-9999">
+                    </div>
+
+                    <!-- Email -->
+                    <div>
+                        <label for="email" class="block text-lg font-medium text-gray-700 mb-2">Seu email</label>
+                        <input type="email" id="email" name="email" required
+                            class="w-full px-5 py-4 text-xl border-2 border-gray-200 rounded-xl focus:border-whatsapp focus:ring-whatsapp focus:outline-none"
+                            placeholder="seu@email.com">
+                    </div>
+
+                    <!-- Plano -->
+                    <div>
+                        <label class="block text-lg font-medium text-gray-700 mb-3">Escolha seu plano</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="plano" value="basico" class="sr-only peer" checked>
+                                <div
+                                    class="p-4 border-2 border-gray-200 rounded-xl text-center peer-checked:border-whatsapp peer-checked:bg-whatsapp/5 transition-all">
+                                    <div class="font-bold text-xl text-navy">Básico</div>
+                                    <div class="text-whatsapp font-bold text-2xl">R$29/mês</div>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="plano" value="completo" class="sr-only peer">
+                                <div
+                                    class="p-4 border-2 border-gray-200 rounded-xl text-center peer-checked:border-whatsapp peer-checked:bg-whatsapp/5 transition-all">
+                                    <div class="font-bold text-xl text-navy">Completo</div>
+                                    <div class="text-whatsapp font-bold text-2xl">R$49/mês</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Botão -->
+                    <button type="submit"
+                        class="w-full bg-whatsapp hover:bg-whatsapp-dark text-white font-bold py-5 rounded-xl text-2xl transition-all hover:shadow-lg">
+                        Começar 7 Dias Grátis →
+                    </button>
+
+                    <p class="text-center text-gray-500">
+                        ✓ Sem cartão de crédito &nbsp; ✓ Cancele quando quiser
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         FOOTER
+    ======================================== -->
+    <footer class="bg-navy text-white py-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <!-- Logo -->
+                <div>
+                    <div class="mb-4">
+                        <svg width="160" height="40" viewBox="0 0 400 100" xmlns="http://www.w3.org/2000/svg"
+                            class="h-10">
+                            <defs>
+                                <linearGradient id="grd2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#25D366" />
+                                    <stop offset="100%" style="stop-color:#128C7E" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="5" y="15" width="70" height="70" rx="18" fill="url(#grd2)" />
+                            <ellipse cx="40" cy="48" rx="24" ry="20" fill="white" />
+                            <circle cx="30" cy="44" r="5" fill="#25D366" />
+                            <circle cx="50" cy="44" r="5" fill="#25D366" />
+                            <circle cx="32" cy="42" r="2" fill="white" />
+                            <circle cx="52" cy="42" r="2" fill="white" />
+                            <path d="M26 54 Q40 66 54 54" stroke="#25D366" stroke-width="4" fill="none"
+                                stroke-linecap="round" />
+                            <text x="90" y="52" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="700"
+                                fill="white">Ajuda</text>
+                            <text x="210" y="52" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="700"
+                                fill="#25D366">Fácil</text>
+                            <rect x="90" y="62" width="60" height="26" rx="6" fill="#25D366" />
+                            <text x="120" y="81" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="700"
+                                fill="white" text-anchor="middle">.ia.br</text>
+                        </svg>
+                    </div>
+                    <p class="text-gray-400">Tecnologia que inclui, não complica.</p>
+                </div>
+
+                <!-- Links -->
+                <div>
+                    <h4 class="font-semibold mb-4">Navegação</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#como-funciona" class="hover:text-white">Como Funciona</a></li>
+                        <li><a href="#funcionalidades" class="hover:text-white">Funcionalidades</a></li>
+                        <li><a href="#precos" class="hover:text-white">Preços</a></li>
+                        <li><a href="#faq" class="hover:text-white">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal -->
+                <div>
+                    <h4 class="font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Termos de Uso</a></li>
+                        <li><a href="#" class="hover:text-white">Privacidade</a></li>
+                        <li><a href="#" class="hover:text-white">LGPD</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contato -->
+                <div>
+                    <h4 class="font-semibold mb-4">Contato</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>📱 (11) 99999-9999</li>
+                        <li>✉️ contato@ajudafacil.com.br</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-8 text-center text-gray-400">
+                <p>© 2026 Ajuda Fácil. Feito com 💚 no Brasil.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Alpine.js Collapse Plugin -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+</body>
+
+</html>
