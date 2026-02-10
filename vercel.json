@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "name": "ajuda-facil",
+    "outputDirectory": "site",
+    "builds": [
+        {
+            "src": "site/**",
+            "use": "@vercel/static"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/site/$1"
+        }
+    ]
+}
