@@ -1,0 +1,18 @@
+{
+    "version": 2,
+    "buildCommand": "npx prisma generate && npx tsc",
+    "installCommand": "npm install",
+    "outputDirectory": ".",
+    "functions": {
+        "api/index.js": {
+            "maxDuration": 30,
+            "includeFiles": "dist/**,node_modules/.prisma/**,node_modules/@prisma/client/**,prisma/**"
+        }
+    },
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.js"
+        }
+    ]
+}

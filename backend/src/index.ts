@@ -95,7 +95,9 @@ process.on('SIGTERM', async () => {
     process.exit(0);
 });
 
-// Iniciar
-startServer();
+// Iniciar (apenas se não for ambiente serverless)
+if (!process.env.VERCEL) {
+    startServer();
+}
 
 export default app;

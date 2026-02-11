@@ -35,7 +35,12 @@ const envSchema = z.object({
 });
 
 const parseEnv = () => {
-    const parsed = envSchema.safeParse(process.env);
+    // Trim whitespace from env vars to avoid issues with Vercel env config
+    const trimmedEnv: Record<string, string | undefined> = {};
+    for (const [key, value] of Object.entries(process.env)) {
+        trimmedEnv[key] = value?.trim();
+    }
+    const parsed = envSchema.safeParse(trimmedEnv);
 
     if (!parsed.success) {
         console.error('❌ Invalid environment variables:');

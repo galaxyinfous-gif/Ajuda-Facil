@@ -92,7 +92,7 @@ export async function updateConversation(
         data: {
             status: data.status,
             intent: data.intent,
-            context: data.context,
+            context: data.context as any,
         },
     });
 }
@@ -160,7 +160,7 @@ export async function createOrder(
             userId,
             type,
             provider,
-            details,
+            details: details as any,
         },
     });
 }

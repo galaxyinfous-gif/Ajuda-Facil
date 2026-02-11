@@ -21,8 +21,8 @@ export const logger = winston.createLogger({
     ],
 });
 
-// Em produção, adicionar log em arquivo
-if (config.isProd) {
+// Em produção e fora de serverless, adicionar log em arquivo
+if (config.isProd && !process.env.VERCEL) {
     logger.add(
         new winston.transports.File({
             filename: 'logs/error.log',
